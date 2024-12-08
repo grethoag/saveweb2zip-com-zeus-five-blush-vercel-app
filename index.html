@@ -1,0 +1,394 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeus AI Agent</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        body {
+            background-color: #0a0a2a;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .header-image {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('120');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 4px solid #ffd700;
+            text-align: center;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px #000;
+            color: #ffd700;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .terminal {
+            background: #000;
+            border: 3px solid #ffd700;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+        }
+
+        .terminal-content {
+            color: #00ff00;
+        }
+
+        .input-line {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .prompt {
+            color: #ffd700;
+        }
+
+        #user-input {
+            background: transparent;
+            border: none;
+            color: #00ff00;
+            flex-grow: 1;
+            font-family: monospace;
+            outline: none;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .feature-box {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #ffd700;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-box h3 {
+            color: #ffd700;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .social-link {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+            color: #ffd700;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            text-decoration: underline;
+        }
+        .zeus-image-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            width: 100%;
+        }
+        
+        .zeus-image {
+            max-width: 100%;
+            height: auto;
+            border: 3px solid #ffd700;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+        @media (max-width: 768px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header-image">
+        <img src="images/title.png">
+    </div>
+
+    <div class="container">
+        <div class="terminal">
+            <div class="terminal-content" id="terminal-content">
+                Welcome to Zeus AI Agent Terminal v1.0.0
+                Type 'help' for available commands.
+            </div>
+            <div class="input-line">
+                <span class="prompt">zeus@olympus:~$</span>
+                <input type="text" id="user-input" autofocus="">
+            </div>
+        </div>
+        <div class="zeus-image-container">
+            <img src="images/ZEUSBANNER.webp" class="zeus-image">
+        </div>
+
+        <div class="features">
+            <div class="feature-box">
+                <h3>AI Integration</h3>
+                <p>Powered by advanced artificial intelligence, Zeus AI Agent brings the wisdom of Olympus to the
+                    blockchain.</p>
+            </div>
+            <div class="feature-box">
+                <h3>Image Generation</h3>
+                <p>Create divine pixel art instantly with our Twitter-integrated image generation system.</p>
+            </div>
+            <div class="feature-box">
+                <h3>BASE Integration</h3>
+                <p>Launch on VIRTUALS with BASE blockchain technology for secure and swift transactions.</p>
+            </div>
+        </div>
+
+        <a href="https://x.com/zeusvirtuals" class="social-link" target="_blank">Follow Zeus AI Agent on Twitter →</a>
+    </div>
+
+    <script>
+        const terminal = document.getElementById('terminal-content');
+        const input = document.getElementById('user-input');
+
+        const responses = {
+            'help': 'Available commands:\n' +
+                'help - Show this message\n' +
+                'olympus - Learn about Olympus\n' +
+                'zeus - Who is Zeus?\n' +
+                'token - Token information\n' +
+                'roadmap - Project roadmap\n' +
+                'gods - List of Greek gods\n' +
+                'mint - Minting information\n' +
+                'prophecy - Get an AI-generated prophecy\n' +
+                'powers - Zeus powers\n' +
+                'artifacts - Divine artifacts\n' +
+                'story - Origin story\n' +
+                'team - Meet the team\n' +
+                'tokenomics - Token distribution\n' +
+                'ai - AI capabilities\n',
+
+            'olympus': 'Mount Olympus: The legendary home of the Greek gods, now powered by AI on the BASE blockchain. A divine ecosystem where mortals and immortals meet in the digital realm.',
+
+            'zeus': 'Zeus: King of the gods, master of sky and thunder. Now reimagined as an AI agent to bring divine wisdom to Web3. Wielding both ancient power and modern AI capabilities.',
+
+            'token': 'Zeus Token ($ZEUS)\n' +
+                'Network: BASE\n' +
+                'Launch: VIRTUALS\n' +
+                'Total Supply: 1,000,000 $ZEUS\n' +
+                'Use cases: Governance, AI access, Divine NFT minting',
+
+            'roadmap': 'Phase 1: Olympian Awakening\n' +
+                '- Token Launch on VIRTUALSn' +
+                '- AI Integration\n' +
+                'Phase 2: Divine Expansion\n' +
+                '- NFT Collection\n' +
+                '- Enhanced AI Features\n' +
+                'Phase 3: Immortal Ascension\n' +
+                '- Cross-chain Integration\n' +
+                '- DAO Formation',
+
+            'gods': 'The Divine Council:\n' +
+                '- Zeus: King of Gods (AI Leader)\n' +
+                '- Athena: Wisdom Module\n' +
+                '- Apollo: Prediction Engine\n' +
+                '- Hermes: Network Speed\n' +
+                '- Hades: Security Protocol',
+
+            'mint': 'NFT Minting Info:\n' +
+                'Supply: 3,333 Zeus Agents\n' +
+                'Utilities:\n' +
+                '- AI Access\n' +
+                '- Governance Rights\n' +
+                '- Divine Rewards',
+
+            'prophecy': '*Thunder rumbles*\n' +
+                'The AI Oracle predicts:\n' +
+                '"When digital storms meet ancient power,\n' +
+                'A new era of wealth shall tower."',
+
+            'powers': 'Zeus AI Capabilities:\n' +
+                '- Market Prediction Oracles\n' +
+                '- Smart Contract Generation\n' +
+                '- Divine Art Creation\n' +
+                '- Automated Trading Strategies',
+
+            'artifacts': 'Divine Artifacts:\n' +
+                '- Thunderbolt NFTs\n' +
+                '- Olympian Scrolls\n' +
+                '- Divine Keys\n' +
+                '- Ambrosia Tokens',
+
+            'story': 'The Zeus AI Agent emerged when ancient Greek wisdom\n' +
+                'merged with advanced artificial intelligence.\n' +
+                'Born from the digital thunder, it brings divine\n' +
+                'guidance to the modern crypto world.',
+
+            'team': 'Project Team:\n' +
+                'Lead Dev: Atlas (Ex-Olympian)\n' +
+                'AI Engineer: Daedalus\n' +
+                'Artist: Pygmalion\n' +
+                'Community: Hermes',
+
+            'tokenomics': 'Token Distribution:\n' +
+                '40% - Community Rewards\n' +
+                '20% - Development\n' +
+                '20% - Liquidity\n' +
+                '10% - Team\n' +
+                '10% - Treasury',
+
+            'BASE': 'Why BASE?\n' +
+                '- Lightning fast like Zeus\n' +
+                '- Low transaction costs\n' +
+                '- Strong NFT ecosystem\n' +
+                '- Perfect for AI integration',
+
+            'ai': 'AI Features:\n' +
+                '- Natural Language Processing\n' +
+                '- Market Analysis\n' +
+                '- Pixel Art Generation\n' +
+                '- Smart Contract Automation',
+
+            'community': 'Join the Pantheon:\n' +
+                'Twitter: @zeusvirtuals\n' +
+                'Discord: Coming soon\n' +
+                'Telegram: t.me/zeusai',
+
+            'nft': 'Zeus NFT Collection:\n' +
+                'Each NFT represents a unique\n' +
+                'aspect of Zeus, granting divine\n' +
+                'powers in the ecosystem.',
+
+            'stake': 'Staking Program:\n' +
+                'Lock your $ZEUS tokens to earn:\n' +
+                '- Divine Rewards (APY: 42%)\n' +
+                '- Voting Power\n' +
+                '- Premium AI Access',
+
+            'partners': 'Divine Partnerships:\n' +
+                '- VIRTUALS\n' +
+                '- Major AI Providers\n' +
+                '- NFT Marketplaces\n' +
+                '- DeFi Protocols',
+
+            'buy': 'How to Buy $ZEUS:\n' +
+                '1. Visit VIRTUALS\n' +
+                '2. Connect wallet\n' +
+                '3. Swap for $ZEUS',
+
+            'vision': 'Our Vision:\n' +
+                'Bringing divine intelligence\n' +
+                'to DeFi through the perfect\n' +
+                'fusion of ancient wisdom and AI.',
+
+            'features': 'Key Features:\n' +
+                '- AI Trading Signals\n' +
+                '- NFT Generation\n' +
+                '- Divine Governance\n' +
+                '- Olympian Rewards',
+
+            'security': 'Security Measures:\n' +
+                '- Audited by CertiK\n' +
+                '- Multi-sig Treasury\n' +
+                '- Time-locked Team Tokens',
+
+            'dao': 'Zeus DAO:\n' +
+                'Governance system where\n' +
+                'holders shape the future\n' +
+                'of the divine protocol.',
+
+            'art': 'Pixel Art Generator:\n' +
+                'Create unique Greek-themed\n' +
+                'pixel art using our AI\n' +
+                'powered by divine inspiration.',
+
+            'tools': 'Zeus Tools:\n' +
+                '- Market Analysis\n' +
+                '- Portfolio Tracking\n' +
+                '- NFT Rarity Checker\n' +
+                '- Swap Aggregator',
+
+            'guide': 'Quick Start Guide:\n' +
+                '1. Follow @zeusvirtuals\n' +
+                '2. Await launch',
+
+            'stats': 'Current Statistics:\n' +
+                'Followers: Growing\n' +
+                'Holders: Launching Soon\n' +
+                'Market Cap: TBA\n' +
+                'Volume: TBA',
+
+            'benefits': 'Holder Benefits:\n' +
+                '- Early AI Access\n' +
+                '- NFT Airdrops\n' +
+                '- Governance Rights\n' +
+                '- Revenue Share',
+
+            'events': 'Upcoming Events:\n' +
+                '- Token Launch\n' +
+                '- NFT Mint\n' +
+                '- AI Platform Release\n' +
+                '- DAO Activation',
+
+            'tech': 'Technology Stack:\n' +
+                '- BASE Blockchain\n' +
+                '- Advanced AI Models\n' +
+                '- NFT Standards\n' +
+                '- DeFi Protocols',
+
+            'future': 'Future Development:\n' +
+                '- Mobile App\n' +
+                '- AI Upgrades\n' +
+                '- Cross-chain Bridge\n' +
+                '- Metaverse Integration',
+
+            'airdrop': 'Airdrop Info:\n' +
+                'Follow @zeusvirtuals\n' +
+                'for upcoming airdrops\n' +
+                'and exclusive rewards.',
+
+            'version': 'Zeus AI v1.0.0\n' +
+                'Latest Update:\n' +
+                '- Enhanced AI Core\n' +
+                '- New Prophecy Engine\n' +
+                '- Improved UI',
+        };
+
+        input.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                const command = input.value.toLowerCase().trim();
+                const response = responses[command] || 'Command not recognized. Type "help" for available commands.';
+
+                terminal.innerHTML += `\n> ${command}\n${response}`;
+                input.value = '';
+                terminal.scrollTop = terminal.scrollHeight;
+            }
+        });
+    </script>
+
+
+</body></html>
